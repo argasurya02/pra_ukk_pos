@@ -1,0 +1,88 @@
+body {
+    background-color: #151515;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.loading {
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Efek Ketik Loading */
+.title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #3498db; /* Warna biru */
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 20px;
+}
+
+.typing::after {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: #3498db; /* Warna biru */
+    margin-left: 5px;
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Spinner */
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #3498db; /* Warna biru */
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 300px;
+    height: 10px;
+    background-color: #222;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    margin: 10px auto;
+}
+
+.progress {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #3498db, #2980b9); /* Warna biru */
+    transition: width 0.3s ease-in-out;
+}
+
+/* Fade-out effect */
+.hidden {
+    animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; transform: scale(1.1); }
+}
