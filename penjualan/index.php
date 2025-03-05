@@ -262,27 +262,65 @@ $nojual = generateNo();
         </div>
     </section>
     <script>
-        // Existing scripts
-        let barcode = document.getElementById('barcode');
-        let tgl = document.getElementById('tglNota');
-        let qty = document.getElementById('qty');
-        let harga = document.getElementById('harga');
-        let jmlHarga = document.getElementById('jmlHarga');
-        let bayar = document.getElementById('bayar');
-        let kembalian = document.getElementById('kembalian');
-        let total = document.getElementById('total');
+let barcode = document.getElementById('barcode');
+let tgl = document.getElementById('tglNota');
+let qty = document.getElementById('qty');
+let harga = document.getElementById('harga');
+let jmlHarga = document.getElementById('jmlHarga');
+let bayar = document.getElementById('bayar');
+let kembalian = document.getElementById('kembalian');
+let total = document.getElementById('total');
 
-        barcode.addEventListener('change', function() {
-            document.location.href = '?barcode=' + barcode.value + '&tgl=' + tgl.value;
-        })
-
-        qty.addEventListener('input', function() {
+// Fungsi untuk menangani input barcode
+function handleBarcodeInput() {
+    // Pastikan ada nilai barcode
+    if (barcode.value.trim() !== '') {
+        // Set qty menjadi 1 jika kosong
+        if (!qty.value) {
+            qty.value = 1;
+        }
+        
+        // Update jumlah harga
+        if (harga.value) {
             jmlHarga.value = harga.value * qty.value;
-        })
+        }
+        
+        // Redirect dengan parameter barcode
+        window.location.href = '?barcode=' + encodeURIComponent(barcode.value.trim()) + '&tgl=' + tgl.value;
+    }
+}
 
-        bayar.addEventListener('input', function() {
-            kembalian.value = bayar.value - total.value;
-        })
+// Event listener untuk tab dan enter
+barcode.addEventListener('keydown', function(e) {
+    // Tangani Tab dan Enter
+    if (e.key === 'Tab' || e.key === 'Enter') {
+        e.preventDefault(); // Mencegah perilaku default
+        handleBarcodeInput();
+    }
+});
+
+// Fallback untuk perubahan
+barcode.addEventListener('change', function() {
+    handleBarcodeInput();
+});
+
+// Event listener lain tetap sama
+qty.addEventListener('input', function() {
+    jmlHarga.value = harga.value * qty.value;
+});
+
+bayar.addEventListener('input', function() {
+    kembalian.value = bayar.value - total.value;
+});
+
+// Tambahkan listener untuk paste event (karena scanner sering menggunakan clipboard)
+barcode.addEventListener('paste', function(e) {
+    // Tunggu sebentar agar value terupdate
+    setTimeout(handleBarcodeInput, 100);
+});
+
+// Tambahkan log untuk debugging
+console.log('Barcode script loaded');
 
         // New script for handling customer selection
         let idPelanggan = document.getElementById('id_pelanggan');
